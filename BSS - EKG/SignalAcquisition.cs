@@ -90,13 +90,15 @@ namespace BSS___EKG
 
             // Init plot
             this.plot = plot;
-            PlotModel model = new PlotModel { Title = "EKG" };
+            PlotModel model = new PlotModel { Title = "EKG Signal" };
             model.Series.Add(lineSeries);
             plot.Model = model;
 
             // Add default data to plot
             for (int i = -duration; i < 0; i++)
                 lineSeries.Points.Add(new DataPoint(i * 1.0 / f, 950));
+
+            lineSeries.Smooth = true;
 
             
         }

@@ -5,33 +5,22 @@
         xmlns:local="clr-namespace:BSS___EKG"
         Title="MainWindow">
 
-    <Window.DataContext>
-        <local:SignalAcquisition/>
-    </Window.DataContext>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_File">
-                <MenuItem Header="_Init Acquisition" Click="LoadSignal_Click"/>
-                <MenuItem Header="_Play" Click="playSignalButton_Click"/>
-                <MenuItem Header="_Stop" Click="stopSignalButton_Click"/>
-            </MenuItem>
-        </Menu>
-        <Grid> 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <oxy:Plot x:Name="plot" Grid.Row="0">
-                <oxy:Plot.Series>
-                    <oxy:LineSeries ItemsSource="{Binding Points}"/>
-                </oxy:Plot.Series>
-            </oxy:Plot>
-            
-            <Grid Grid.Row="1" Height="50">
-                
-            </Grid>
+            <MenuItem Header="_Init Acquisition" Click="LoadSignal_Click"/>
+            <MenuItem Header="_Preferences" />
+        </Menu>        
+
+        <Grid DockPanel.Dock="Bottom" Height="50" Background="LightGray">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="playButton" Content="Play" Width="75" Height="25" Click="playSignalButton_Click" />
+                <Button x:Name="stopButton" Content="Stop" Width="75" Height="25" Click="stopSignalButton_Click" />
+            </StackPanel>
         </Grid>
+
+        
+        <oxy:Plot x:Name="plot" Grid.Row="0"/>
 
     </DockPanel>
 </Window>
