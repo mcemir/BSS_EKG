@@ -21,8 +21,8 @@ namespace BSS___EKG
         private int index = 0;          // Index of the current element
         private int duration = 500;    // Number of samples to be shown on the graph
         private List<decimal> data = new List<decimal>();
-        Plot plot;                      // The plot
-        OxyPlot.Series.LineSeries lineSeries = new OxyPlot.Series.LineSeries(); // Lines for the plot
+        private Plot plot;                      // The plot
+        private OxyPlot.Series.LineSeries lineSeries = new OxyPlot.Series.LineSeries(); // Lines for the plot
 
         private DispatcherTimer dispatcherTimer;
 
@@ -128,10 +128,11 @@ namespace BSS___EKG
         {
             lineSeries.Points.RemoveAt(0);
             lineSeries.Points.Add(new DataPoint(index * 1.0/f, (double)data[index]));
-            
+
+            Controller.QRS_Detect(data, index); // Check if new value is a R peak
 
             index = (index+1)%(samples-duration);
-            plot.InvalidatePlot();
+            plot.InvalidatePlot();      // This updates the plot
         }
     }
 }
