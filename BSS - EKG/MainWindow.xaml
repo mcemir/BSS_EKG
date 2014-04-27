@@ -4,7 +4,10 @@
         xmlns:oxy="http://oxyplot.codeplex.com"
         xmlns:local="clr-namespace:BSS___EKG"
         Title="MainWindow">
-
+    
+    <Window.DataContext>
+        <local:Controller/>
+    </Window.DataContext>
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
@@ -19,8 +22,15 @@
             </StackPanel>
         </Grid>
 
+        <Grid>
+            <oxy:Plot x:Name="plot" />
+            <StackPanel Orientation="Horizontal" Margin="50">
+                <TextBlock Text="HR = " FontSize="25" FontWeight="Bold" Foreground="Red"  />
+                <TextBlock Text="" x:Name="hrTextBlock" FontSize="25" FontWeight="Bold" Foreground="Red"  />
+            </StackPanel>
+            
+        </Grid>
         
-        <oxy:Plot x:Name="plot" Grid.Row="0"/>
 
     </DockPanel>
 </Window>

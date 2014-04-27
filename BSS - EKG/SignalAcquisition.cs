@@ -16,7 +16,7 @@ namespace BSS___EKG
     class SignalAcquisition
     {
         private int signalsCount;       // The number of signals present in the file
-        private int f;                  // Sampling frequency
+        public static int F;            // Sampling frequency
         private int samples;            // The number of samples        
         private int index = 0;          // Index of the current element
         private int duration = 500;    // Number of samples to be shown on the graph
@@ -58,7 +58,7 @@ namespace BSS___EKG
                 {
                     string[] bits = reader.ReadLine().Split(' ');
                     signalsCount = Int32.Parse(bits[1]);
-                    f = Int32.Parse(bits[2]);
+                    F = Int32.Parse(bits[2]);
                     samples = Int32.Parse(bits[3]);
                 }
 
@@ -85,7 +85,7 @@ namespace BSS___EKG
             // Init timer
             dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)TimeSpan.FromSeconds(1.0/f).TotalMilliseconds);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)TimeSpan.FromSeconds(1.0/F).TotalMilliseconds);
 
 
             // Init plot
@@ -96,7 +96,7 @@ namespace BSS___EKG
 
             // Add default data to plot
             for (int i = -duration; i < 0; i++)
-                lineSeries.Points.Add(new DataPoint(i * 1.0 / f, 950));
+                lineSeries.Points.Add(new DataPoint(i * 1.0 / F, 950));
 
             //lineSeries.Smooth = true;
 
@@ -127,7 +127,7 @@ namespace BSS___EKG
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             lineSeries.Points.RemoveAt(0);
-            lineSeries.Points.Add(new DataPoint(index * 1.0/f, (double)data[index]));
+            lineSeries.Points.Add(new DataPoint(index * 1.0/F, (double)data[index]));
 
             Controller.QRS_Detect(data, index); // Check if new value is a R peak
 

@@ -25,7 +25,6 @@ namespace BSS___EKG
     public partial class MainWindow : Window
     {
         SignalAcquisition acquisition = new SignalAcquisition();
-
         public MainWindow()
         {
             InitializeComponent();
