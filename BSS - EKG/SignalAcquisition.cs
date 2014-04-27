@@ -98,7 +98,7 @@ namespace BSS___EKG
             for (int i = -duration; i < 0; i++)
                 lineSeries.Points.Add(new DataPoint(i * 1.0 / f, 950));
 
-            lineSeries.Smooth = true;
+            //lineSeries.Smooth = true;
 
             
         }
