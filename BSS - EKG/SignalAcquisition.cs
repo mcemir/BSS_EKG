@@ -15,25 +15,29 @@ namespace BSS___EKG
 {
     class SignalAcquisition
     {
-        private int signalsCount;       // The number of signals present in the file
-        public static int F;            // Sampling frequency
+        public static SignalAcquisition Instance { get; set;}
+
+        private int signalsCount;       // The number of signals present in the file        
         private int samples;            // The number of samples        
-        private int index = 0;          // Index of the current element
-        private int duration = 500;    // Number of samples to be shown on the graph
+        private int index = 0;          // Index of the current element        
         private List<decimal> data = new List<decimal>();
-        private Plot plot;                      // The plot
         private OxyPlot.Series.LineSeries lineSeries = new OxyPlot.Series.LineSeries(); // Lines for the plot
 
         private DispatcherTimer dispatcherTimer;
+
+        public int F {get; set;}    // Sampling frequency
+        public int Duration { get; set; }   // Number of samples to be shown on the graph
 
         public IList<DataPoint> Points { get; private set; }    // List of points that should be drawn
         
         public SignalAcquisition()
         {
+            Instance = this;
+            Duration = 500;
         }
 
 
-        public void Init(Plot plot)
+        public void Init()
         {
             // Open the file dialog to show the file
             OpenFileDialog dlg = new OpenFileDialog();
@@ -60,6 +64,8 @@ namespace BSS___EKG
                     signalsCount = Int32.Parse(bits[1]);
                     F = Int32.Parse(bits[2]);
                     samples = Int32.Parse(bits[3]);
+
+                    MainWindow.Instance.FrequencyTextBlock.Text = F.ToString();
                 }
 
                 // Read the data file
@@ -89,13 +95,12 @@ namespace BSS___EKG
 
 
             // Init plot
-            this.plot = plot;
             PlotModel model = new PlotModel { Title = "EKG Signal" };
             model.Series.Add(lineSeries);
-            plot.Model = model;
+            MainWindow.Instance.EKG_Plot.Model = model;
 
             // Add default data to plot
-            for (int i = -duration; i < 0; i++)
+            for (int i = -Duration; i < 0; i++)
                 lineSeries.Points.Add(new DataPoint(i * 1.0 / F, 950));
 
             //lineSeries.Smooth = true;
@@ -129,10 +134,10 @@ namespace BSS___EKG
             lineSeries.Points.RemoveAt(0);
             lineSeries.Points.Add(new DataPoint(index * 1.0/F, (double)data[index]));
 
-            Controller.QRS_Detect(data, index); // Check if new value is a R peak
+            Controller.Instance.QRS_Detect(data, index); // Check if new value is a R peak
 
-            index = (index+1)%(samples-duration);
-            plot.InvalidatePlot();      // This updates the plot
+            index = (index+1)%(samples-Duration);
+            MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
         }
     }
 }

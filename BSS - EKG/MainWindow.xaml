@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:oxy="http://oxyplot.codeplex.com"
         xmlns:local="clr-namespace:BSS___EKG"
-        Title="MainWindow">
+        Title="MainWindow" Loaded="Window_Loaded">
     
     <Window.DataContext>
         <local:Controller/>
@@ -12,7 +12,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Init Acquisition" Click="LoadSignal_Click"/>
-            <MenuItem Header="_Preferences" />
+            <MenuItem Header="_Preferences" Click="Preferences_Click" />
         </Menu>        
 
         <Grid DockPanel.Dock="Bottom" Height="50" Background="LightGray">
@@ -22,10 +22,55 @@
             </StackPanel>
         </Grid>
 
+        <Grid x:Name="PreferencesPanel" DockPanel.Dock="Left" Width="200" Background="LightGray" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Text="Acquisition" Margin="5" />
+            <StackPanel Grid.Row="1" Margin="20,0,5,5" Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    <TextBlock Grid.Row="0" Text="Preview duration (ms):" Margin="0,0,5,0" />
+                    <TextBox x:Name="PreviewDurationTextBlock" Text="500" Width="44" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    <TextBlock Grid.Row="0" Text="Frequency:" Margin="0,0,5,0" />
+                    <TextBox x:Name="FrequencyTextBlock" Width="105" />
+                </StackPanel>
+            </StackPanel>
+
+
+            <TextBlock Grid.Row="2" Text="HR Calculation" Margin="5" />
+            <StackPanel Grid.Row="3" Margin="20,0,5,5" Orientation="Vertical">
+                <CheckBox x:Name="ShowHR_CheckBox" Content="Show HR" Margin="2" Click="PreferencesApply_Click" />
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    <TextBlock Grid.Row="0" Text="Cycles:" Margin="0,0,5,0" />
+                    <TextBox x:Name="CyclesTextBlock" Text="2" Width="125" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="2">
+                    <TextBlock Grid.Row="0" Text="Decimal Places:" Margin="0,0,5,0" />
+                    <TextBox x:Name="DecimalPlacesTextBlock" Text="0" Width="80" />
+                </StackPanel>
+            </StackPanel>
+
+            <TextBlock Grid.Row="4" Text="General" Margin="5" />
+            <StackPanel Grid.Row="5" Margin="20,0,5,5" Orientation="Vertical">
+                <CheckBox x:Name="Sound_CheckBox" Content="Enable Sound" Margin="2" IsChecked="True" />                
+            </StackPanel>
+            
+            <Button Grid.Row="6" Content="Apply" Click="PreferencesApply_Click" Margin="5" />
+        </Grid>
+
         <Grid>
-            <oxy:Plot x:Name="plot" />
-            <StackPanel Orientation="Horizontal" Margin="50">
-                <TextBlock Text="HR = " FontSize="25" FontWeight="Bold" Foreground="Red"  />
+            <oxy:Plot x:Name="EKG_Plot" />
+            <StackPanel Orientation="Horizontal" Margin="50" x:Name="hrStackPanel">
+                <TextBlock Text="HR = "  FontSize="25" FontWeight="Bold" Foreground="Red"  />
                 <TextBlock Text="" x:Name="hrTextBlock" FontSize="25" FontWeight="Bold" Foreground="Red"  />
             </StackPanel>
             
