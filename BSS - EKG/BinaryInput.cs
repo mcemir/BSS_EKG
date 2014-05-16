@@ -17,7 +17,7 @@ namespace BSS___EKG
 
         }
 
-        public override void read()
+        public override void read(int channel)
         {
             throw new NotImplementedException();
         }

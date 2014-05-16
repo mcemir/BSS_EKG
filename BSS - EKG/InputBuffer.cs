@@ -14,7 +14,7 @@ namespace BSS___EKG
     class InputBuffer
     {
         public static int MAX_BUFFER_SIZE = 100;
-        public static List<decimal> data = new List<decimal>(MAX_BUFFER_SIZE);
+        public static List<decimal> data = new List<decimal>();
         static Input input;
         public static void Open(String filename, short channel, FileType filetype){
         }
@@ -24,8 +24,8 @@ namespace BSS___EKG
         public static bool ReadMany(){
             return true;
         }
-        public static bool Write(double value){
-            Console.WriteLine(value);
+        public static bool Write(decimal value){
+            data.Add(value);
             return true;
         }
         public static void Clear(){

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using System.Windows;
 
 namespace BSS___EKG
 {
@@ -39,11 +40,13 @@ namespace BSS___EKG
 
         public void Init()
         {
+
             // Open the file dialog to show the file
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = ".txt";                            // Default file extension
             dlg.Filter = "Text Documents (*.txt)|*.txt";        // Filter files by extension
             dlg.Title = "Select PhysioBank MIT-BIH Arrhytmia Signal";
+           
 
             // Show open file dialog box
             bool result = (bool)dlg.ShowDialog();
@@ -56,8 +59,13 @@ namespace BSS___EKG
                 string fileName = System.IO.Path.GetFileName(filePath);
                 string directoryPath = System.IO.Path.GetDirectoryName(filePath);
                 string headerFile = directoryPath + "\\" + fileName.Remove(fileName.IndexOf('.'), fileName.Length - fileName.IndexOf('.')) + ".hea";
+                TextInput leno = new TextInput(filePath, 100);
+                leno.read(1);
 
-                // Read the header file
+            }
+
+            
+                /*// Read the header file
                 using (TextReader reader = File.OpenText(headerFile))
                 {
                     string[] bits = reader.ReadLine().Split(' ');
@@ -105,7 +113,7 @@ namespace BSS___EKG
 
             //lineSeries.Smooth = true;
 
-            
+            */
         }
 
         
