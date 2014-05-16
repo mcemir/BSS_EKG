@@ -96,7 +96,7 @@ namespace BSS___EKG
 
             // Init plot
             PlotModel model = new PlotModel { Title = "EKG Signal" };
-            model.Series.Add(lineSeries);
+                model.Series.Add(lineSeries);
             MainWindow.Instance.EKG_Plot.Model = model;
 
             // Add default data to plot
