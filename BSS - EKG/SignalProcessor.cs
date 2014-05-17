@@ -13,7 +13,6 @@ namespace BSS___EKG
         private SoundPlayer localPlayer = new SoundPlayer();
         private double QRS_Threshold;
         private List<decimal> data = new List<decimal>();
-        private List<decimal> time = new List<decimal>();
 
         public int HR_digits { get; set; }  // Number of decimal places of HR BPM
         public int Cycles { get; set; }   // Number of cycles used for HR calculation        
@@ -37,7 +36,6 @@ namespace BSS___EKG
         public void QRS_Detect(decimal v, decimal t)
         {
             data.Add(v);
-            time.Add(t);
 
 
             if (data.Count > 3  &&
@@ -51,6 +49,9 @@ namespace BSS___EKG
 
                 updateHR((double)t);
             }
+
+            while (data.Count > 5)
+                data.RemoveAt(0);
         }
 
 
