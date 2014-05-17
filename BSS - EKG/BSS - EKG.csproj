@@ -66,6 +66,7 @@
     <Compile Include="Input\BinaryInput.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\InputBuffer.cs" />
+    <Compile Include="Input\MatlabBinaryInput.cs" />
     <Compile Include="Input\TextInput.cs" />
     <Compile Include="SignalProcessor.cs" />
     <Page Include="MainWindow.xaml">

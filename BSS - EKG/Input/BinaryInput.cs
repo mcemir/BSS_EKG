@@ -10,21 +10,79 @@ namespace BSS___EKG
     class BinaryInput : Input
     {
         protected FileStream file;
-        protected StreamReader reader;
+        protected BinaryReader reader;
 
-        public BinaryInput(String filename, int sleepInterval = 30)
+        public BinaryInput(String file, int sleepInterval = 30)
         {
-
+            filename = file;
+            this.sleepInterval = sleepInterval;
         }
 
         public override void read(InputBuffer ib, int channel)
         {
-            BinaryInput binInput = new BinaryInput(filename, 1000);
-            binInput.read(ib, channel);
+            long fileLength = 0;
+		    try
+		    {
+			    file = new FileStream(filename, FileMode.Open);
+			    reader = new BinaryReader(file);
+		    }
+		    catch (Exception e1)
+		    {
+			    // vec je otvoren fajl, sve je OK
+		    }
+		    fileLength = file.Length;
+		    short flag = 0;
+		    Int64 low = 0, high = 0;
+		    byte[]  buf = new byte[]{ 0, 0, 0 };
+
+		    for (int i = 0; i < fileLength / 3; i++)
+		    {
+			    for (short j = 1; j <= 2; j++)
+			    {
+				    switch (flag)
+				    {
+					    case 0:
+						    try
+						    {
+							    buf = reader.ReadBytes(3);
+						    }
+						    catch (Exception e2)
+						    {
+							    return;
+						    }
+						    low = buf[1] & 0x0F;
+						    high = buf[1] & 0xF0;
+						    if (channel == j)
+							    if (low > 7)
+								    while (!ib.Write(0,convertValue(buf[0] + (low << 8) - 4096)));
+							    else
+								    while (!ib.Write(0, convertValue((buf[0] + (low << 8)))));
+						    flag = 1;
+						    break;
+					    case 1:
+						    if (channel == j)
+							    if (high > 127)
+								    while (!ib.Write(0, convertValue(buf[2] + (high << 4) - 4096)));
+							    else
+								    while (!ib.Write(0, convertValue((buf[2] + (high << 4)))));
+						    flag = 0;
+						    break;
+				    }
+			    }
+		    }
+			// System::Threading::Thread::Sleep(sleepInterval); u prethodnoj switch naredbi je
+			// simulacija cekanja na prekid od ulaznog uredjaja -
+			// kad istekne vrijeme ucita sesljedeca vrijednost EKG signala
+		stop();
         }
         public override void stop()
         {
-            throw new NotImplementedException();
+            file.Close();
+            reader.Close();
+        }
+
+        private decimal convertValue(Int64 val){
+            return (Convert.ToDecimal(val)-1024)/200;
         }
 
     }

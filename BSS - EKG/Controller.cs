@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
+using System.Windows;
 
 namespace BSS___EKG
 {
@@ -73,7 +74,12 @@ namespace BSS___EKG
                 string directoryPath = System.IO.Path.GetDirectoryName(filePath);
                 string headerFile = directoryPath + "\\" + fileName.Remove(fileName.IndexOf('.'), fileName.Length - fileName.IndexOf('.')) + ".hea";
 
-
+                /* u svrhe testiranja
+                InputBuffer ib1 = new InputBuffer();
+                ib1.Open(filePath, 1, FileType.BINARY);
+                for (int i = 0; i < 20; i++)
+                    MessageBox.Show(ib1.ReadOne().ToString());*/
+            
                 /*
                 // Read the header file
                 using (TextReader reader = File.OpenText(headerFile))
@@ -87,8 +93,8 @@ namespace BSS___EKG
 
                     // Update main windows
                     MainWindow.Instance.FrequencyTextBlock.Text = F.ToString();
-                }
-                */
+                }*/
+                
 
                 // Determine file type
                 FileType type = FileType.BINARY;
@@ -121,7 +127,6 @@ namespace BSS___EKG
             // Add default data to plot
             for (int i = -Duration; i < 0; i++)
                 lineSeries.Points.Add(new DataPoint(i * 1.0 / 10000, 0));
-             
 
             //lineSeries.Smooth = true;
         }

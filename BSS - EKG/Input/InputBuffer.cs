@@ -10,7 +10,8 @@ namespace BSS___EKG
 {
     public enum FileType{
         TEXT,
-        BINARY
+        BINARY,
+        MATLAB
     }
     class InputBuffer
     {
