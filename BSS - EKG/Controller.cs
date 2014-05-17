@@ -56,7 +56,7 @@ namespace BSS___EKG
             // Open the file dialog to show the file
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = ".txt";                            // Default file extension
-            dlg.Filter = "Text Documents (*.txt)|*.txt";        // Filter files by extension
+            dlg.Filter = "Text Documents (*.txt)|*.txt|Binary Files (*.dat)|*.dat";        // Filter files by extension
             dlg.Title = "Select PhysioBank MIT-BIH Arrhytmia Signal";
 
 
