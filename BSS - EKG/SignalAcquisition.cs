@@ -144,7 +144,7 @@ namespace BSS___EKG
             lineSeries.Points.RemoveAt(0);
             lineSeries.Points.Add(new DataPoint(index * 1.0/F, (double)data[index]));
 
-            Controller.Instance.QRS_Detect(data, index); // Check if new value is a R peak
+
 
             index = (index+1)%(samples-Duration);
             MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
