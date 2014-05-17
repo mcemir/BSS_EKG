@@ -39,12 +39,17 @@ namespace BSS___EKG
                 }
                 else if (filetype == FileType.BINARY)
                 {
-                    BinaryInput binInput = new BinaryInput(filename, 1000);
-                    binInput.read(this,channel);
+                    try
+                    {
+                        BinaryInput binInput = new BinaryInput(filename, 1000);
+                        binInput.read(this, channel);
+                    }
+                    catch { }
+                    
                 }
                 else
                 {
-                    MessageBox.Show("nesto trece");
+                    MessageBox.Show("Sta si dirao!");
                 }
             }
             catch(Exception){}

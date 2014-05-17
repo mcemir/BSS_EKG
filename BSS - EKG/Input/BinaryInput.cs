@@ -19,7 +19,8 @@ namespace BSS___EKG
 
         public override void read(InputBuffer ib, int channel)
         {
-            throw new NotImplementedException();
+            BinaryInput binInput = new BinaryInput(filename, 1000);
+            binInput.read(ib, channel);
         }
         public override void stop()
         {
