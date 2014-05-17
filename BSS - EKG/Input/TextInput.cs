@@ -54,8 +54,8 @@ namespace BSS___EKG
 				    signal = (decimal.Parse(line.Split('\t')[channel]));
                     time = (decimal.Parse(line.Split('\t')[0]));
 				    signal = signal / 1000;
-                    MessageBox.Show(signal.ToString());// signal je cjelobrojni na 11 bita - dijeli se sa 1000 - mV
-                    InputBuffer.Write(signal);                              // simulacija cekanja na prekid od ulaznog uredjaja -  
+                    time = time / 1000;                                      // signal je cjelobrojni na 11 bita - dijeli se sa 1000 - mV
+                    InputBuffer.Write(time, signal);                        // simulacija cekanja na prekid od ulaznog uredjaja -  
                 } while ((line = reader.ReadLine()) != null);               // kad istekne vrijeme ucita sesljedeca vrijednost EKG signala    
                 stop();
             }
