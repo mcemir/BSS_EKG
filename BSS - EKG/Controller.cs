@@ -13,31 +13,38 @@ using System.Windows.Threading;
 namespace BSS___EKG
 {
     class Controller
-    {                
-        private List<int> R_peaks = new List<int>();
-        private SoundPlayer localPlayer = new SoundPlayer();
-        private int QRS_Threshold;
-
-
+    {             
         private InputBuffer inputBuffer = new InputBuffer();
+        private SignalProcessor signalProcessor = new SignalProcessor();
         private DispatcherTimer dispatcherTimer;
         private OxyPlot.Series.LineSeries lineSeries = new OxyPlot.Series.LineSeries(); // Lines for the plot
 
-        public int Duration { get; set; }   // Number of samples to be shown on the graph
-        public int F { get; set; }    // Sampling frequency
+        private decimal lastTime = 0;
 
-        public int HR_digits { get; set; }  // Number of decimal places of HR BPM
-        public int Cycles { get; set; }   // Number of cycles used for HR calculation        
-        public double HR { get; private set; }
+
+        // SIGNAL PROCESSOR INTERFACE
+        public int HR_digits { // Number of decimal places of HR BPM
+            get { return signalProcessor.HR_digits; } 
+            set {signalProcessor.HR_digits = value;} 
+        }  
+        public int Cycles { // Number of cycles used for HR calculation    
+            get { return signalProcessor.Cycles; }
+            set { signalProcessor.Cycles = value; }
+        }       
+        public double HR {
+            get { return signalProcessor.HR; } 
+        }
+
+
+
+
+        public int Duration { get; set; }   // Number of samples to be shown on the graph
+        
 
 
         public Controller()
         {
-            HR_digits = 1;
-            Cycles = 2;
-            QRS_Threshold = 1100;
-            HR = 0;
-            Duration = 500;
+            Duration = 2000;
         }
 
 
@@ -122,46 +129,6 @@ namespace BSS___EKG
 
 
 
-        public void QRS_Detect(List<decimal> data, int index)
-        {
-            if (data[index] > QRS_Threshold && 
-                data[index] > data[index - 1] && 
-                data[index] > data[index+1])
-            {
-                if (MainWindow.Instance.Sound_CheckBox.IsChecked ==  true)
-                    playSound();
-
-                
-                updateHR(index);                
-            }
-        }
-
-
-        private void updateHR(int index)
-        {
-            R_peaks.Add(index);
-
-            if (R_peaks.Count > 2) {
-                int time = R_peaks.Last() - R_peaks.First();
-                HR = 60.0 * (R_peaks.Count-1) * F / time;
-
-                while (R_peaks.Count > Cycles)
-                    R_peaks.RemoveAt(0);
-
-                // Update HR TextBlock
-                if (MainWindow.Instance.ShowHR_CheckBox.IsChecked == true)
-                    MainWindow.Instance.hrTextBlock.Text = Math.Round(HR, HR_digits).ToString();
-            }  
-        }
-
-        private void playSound()
-        {
-            localPlayer.SoundLocation = @"Assets\EKG_Sound_Effect.wav";
-            localPlayer.Load();
-            localPlayer.Play();
-        }
-
-
 
 
         public void Play()
@@ -183,15 +150,20 @@ namespace BSS___EKG
 
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            lineSeries.Points.RemoveAt(0);
+            if (lineSeries.Points.Count>3)
+                while (lineSeries.Points.Last().X - lineSeries.Points.First().X > Duration/1000.0)
+                    lineSeries.Points.RemoveAt(0);
+
             decimal value = inputBuffer.ReadOne();
             decimal time = inputBuffer.ReadOneTimeCurrent();
 
             lineSeries.Points.Add(new DataPoint((double)time, (double)value));
-
             
-            //QRS_Detect(data, index); // Check if new value is a R peak
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)TimeSpan.FromSeconds((double)(time - lastTime)).TotalMilliseconds);
 
+            signalProcessor.QRS_Detect(value, time);
+
+            lastTime = time;
             MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
         }
     }
