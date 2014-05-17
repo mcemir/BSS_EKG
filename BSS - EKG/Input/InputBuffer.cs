@@ -14,13 +14,17 @@ namespace BSS___EKG
     }
     class InputBuffer
     {
-        public static int MAX_BUFFER_SIZE = 100;
-        public static List<decimal> dataSignal = new List<decimal>();
-        public static List<decimal> dataTime = new List<decimal>();
-        static private int currentPoint = 0;
-        static Input input;
+        public int MAX_BUFFER_SIZE = 100;
+        public List<decimal> dataSignal = new List<decimal>();
+        public List<decimal> dataTime = new List<decimal>();
+        private int currentPoint = 0;
+        Input input;
 
-        public static void Open(String filename, short channel, FileType filetype){
+        public InputBuffer()
+        {
+
+        }
+        public void Open(String filename, short channel, FileType filetype){
             try
             {
                 if (filetype == FileType.TEXT)
@@ -28,14 +32,15 @@ namespace BSS___EKG
                     try
                     {
                         TextInput txtInpt = new TextInput(filename, 1000);
-                        txtInpt.read(channel);
+                        txtInpt.read(this, channel);
                     }
                     catch (Exception) { }
 
                 }
                 else if (filetype == FileType.BINARY)
                 {
-                    MessageBox.Show("BIN");
+                    BinaryInput binInput = new BinaryInput(filename, 1000);
+                    binInput.read(this,channel);
                 }
                 else
                 {
@@ -44,24 +49,24 @@ namespace BSS___EKG
             }
             catch(Exception){}
         }
-        public static decimal ReadOne(){
+        public decimal ReadOne(){
             return dataSignal[currentPoint];
             currentPoint++;
         }
-        public static decimal ReadOneTime()
+        public decimal ReadOneTime()
         {
             return dataTime[currentPoint];
             currentPoint++;
         }
-        public static List<decimal> ReadMany(){
+        public List<decimal> ReadMany(){
             return new List<decimal>();
         }
-        public static bool Write(decimal timeValue, decimal signalValue){
+        public bool Write(decimal timeValue, decimal signalValue){
             dataSignal.Add(signalValue);
             dataTime.Add(timeValue);
             return true;
         }
-        public static void Clear(){
+        public void Clear(){
         }
             
     }

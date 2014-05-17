@@ -16,8 +16,8 @@ namespace BSS___EKG
         protected String filename;
         protected int channel;
         protected int sleepInterval;
-        
-        public abstract void read(int channel);
+
+        public abstract void read(InputBuffer ib, int channel);
         public abstract void stop();
     }
 }

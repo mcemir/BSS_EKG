@@ -59,8 +59,9 @@ namespace BSS___EKG
                 string fileName = System.IO.Path.GetFileName(filePath);
                 string directoryPath = System.IO.Path.GetDirectoryName(filePath);
                 string headerFile = directoryPath + "\\" + fileName.Remove(fileName.IndexOf('.'), fileName.Length - fileName.IndexOf('.')) + ".hea";
-                InputBuffer.Open(filePath,1, FileType.TEXT);
-                MessageBox.Show(InputBuffer.ReadOneTime().ToString());
+                InputBuffer ib1 = new InputBuffer();
+                ib1.Open(filePath, 1, FileType.TEXT);
+                MessageBox.Show(ib1.ReadOneTime().ToString());
                 
 
             }
