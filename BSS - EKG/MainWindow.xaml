@@ -11,7 +11,7 @@
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_Init Acquisition" Click="LoadSignal_Click"/>
+            <MenuItem Header="_Load Signal" Click="LoadSignal_Click"/>
             <MenuItem Header="_Preferences" Click="Preferences_Click" />
         </Menu>        
 

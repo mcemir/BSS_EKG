@@ -62,12 +62,12 @@ namespace BSS___EKG
                 // Get file informations 
                 string filePath = dlg.FileName;
                 string fileName = System.IO.Path.GetFileName(filePath);
+                string fileExtension = System.IO.Path.GetExtension(filePath);
                 string directoryPath = System.IO.Path.GetDirectoryName(filePath);
                 string headerFile = directoryPath + "\\" + fileName.Remove(fileName.IndexOf('.'), fileName.Length - fileName.IndexOf('.')) + ".hea";
 
-                //inputBuffer.
 
-                
+                /*
                 // Read the header file
                 using (TextReader reader = File.OpenText(headerFile))
                 {
@@ -81,9 +81,22 @@ namespace BSS___EKG
                     // Update main windows
                     MainWindow.Instance.FrequencyTextBlock.Text = F.ToString();
                 }
-                
-            }
+                */
 
+                // Determine file type
+                FileType type = FileType.BINARY;
+                if (fileExtension == ".txt" || fileExtension == ".TXT")
+                    type = FileType.TEXT;
+
+
+                // Open the buffer
+                inputBuffer.Open(filePath, 1, type);
+            }
+            else
+                return;
+
+
+            
 
 
             // Init timer
@@ -100,7 +113,7 @@ namespace BSS___EKG
             
             // Add default data to plot
             for (int i = -Duration; i < 0; i++)
-                lineSeries.Points.Add(new DataPoint(i * 1.0 / F, 950));
+                lineSeries.Points.Add(new DataPoint(i * 1.0 / 10000, 0));
              
 
             //lineSeries.Smooth = true;
@@ -172,16 +185,14 @@ namespace BSS___EKG
         {
             lineSeries.Points.RemoveAt(0);
             decimal value = inputBuffer.ReadOne();
-            decimal time = inputBuffer.ReadOneTime();
+            decimal time = inputBuffer.ReadOneTimeCurrent();
 
             lineSeries.Points.Add(new DataPoint((double)time, (double)value));
 
-            /*
-            Controller.Instance.QRS_Detect(data, index); // Check if new value is a R peak
+            
+            //QRS_Detect(data, index); // Check if new value is a R peak
 
-            index = (index + 1) % (samples - Duration);
             MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
-             * */
         }
     }
 }
