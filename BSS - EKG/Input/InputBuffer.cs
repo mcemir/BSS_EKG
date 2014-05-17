@@ -17,7 +17,7 @@ namespace BSS___EKG
         public static int MAX_BUFFER_SIZE = 100;
         public static List<decimal> dataSignal = new List<decimal>();
         public static List<decimal> dataTime = new List<decimal>();
-        static private int currentPoint = 1;
+        static private int currentPoint = 0;
         static Input input;
 
         public static void Open(String filename, short channel, FileType filetype){
