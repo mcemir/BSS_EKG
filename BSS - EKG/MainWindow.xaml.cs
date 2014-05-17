@@ -25,19 +25,18 @@ namespace BSS___EKG
     public partial class MainWindow : Window
     {
         public static MainWindow Instance;
+
+        private Controller controller = new Controller();
         
         public MainWindow()
         {
-            SignalAcquisition acquisition = new SignalAcquisition();
-            Controller controller = new Controller();
-
             InitializeComponent();
             Instance = this;
         }
 
         private void LoadSignal_Click(object sender, RoutedEventArgs e)
         {
-            SignalAcquisition.Instance.Init();
+            controller.LoadSignal();
         }
 
         private void Preferences_Click(object sender, RoutedEventArgs e)
@@ -50,12 +49,12 @@ namespace BSS___EKG
 
         private void playSignalButton_Click(object sender, RoutedEventArgs e)
         {
-            SignalAcquisition.Instance.Play();
+            controller.Play();
         }
 
         private void stopSignalButton_Click(object sender, RoutedEventArgs e)
         {
-            SignalAcquisition.Instance.Stop();
+            controller.Stop();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -65,9 +64,9 @@ namespace BSS___EKG
 
         private void applyPreferences()
         {
-            SignalAcquisition.Instance.Duration = Convert.ToInt32(PreviewDurationTextBlock.Text);
-            Controller.Instance.Cycles = Convert.ToInt32(CyclesTextBlock.Text);
-            Controller.Instance.HR_digits = Convert.ToInt32(DecimalPlacesTextBlock.Text);
+            controller.Duration = Convert.ToInt32(PreviewDurationTextBlock.Text);
+            controller.Cycles = Convert.ToInt32(CyclesTextBlock.Text);
+            controller.HR_digits = Convert.ToInt32(DecimalPlacesTextBlock.Text);
 
             if (ShowHR_CheckBox.IsChecked == true)
                 hrStackPanel.Visibility = Visibility.Visible;
@@ -78,12 +77,6 @@ namespace BSS___EKG
         private void PreferencesApply_Click(object sender, RoutedEventArgs e)
         {
             applyPreferences();
-        }
-
-
-        
-
-
-      
+        }      
     }
 }
