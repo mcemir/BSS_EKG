@@ -62,12 +62,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BinaryInput.cs" />
     <Compile Include="Controller.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="InputBuffer.cs" />
+    <Compile Include="Input\BinaryInput.cs" />
+    <Compile Include="Input\Input.cs" />
+    <Compile Include="Input\InputBuffer.cs" />
+    <Compile Include="Input\TextInput.cs" />
     <Compile Include="SignalAcquisition.cs" />
-    <Compile Include="TextInput.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
