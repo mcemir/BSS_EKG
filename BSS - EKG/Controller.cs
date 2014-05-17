@@ -143,7 +143,7 @@ namespace BSS___EKG
 
             if (R_peaks.Count > 2) {
                 int time = R_peaks.Last() - R_peaks.First();
-                HR = 60.0 * (R_peaks.Count-1) * SignalAcquisition.Instance.F / time;
+                HR = 60.0 * (R_peaks.Count-1) * F / time;
 
                 while (R_peaks.Count > Cycles)
                     R_peaks.RemoveAt(0);
