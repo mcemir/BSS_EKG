@@ -20,14 +20,12 @@ namespace BSS___EKG
         public override void read(int channel)
         {
             String line = "";
-		    decimal signal;
-            MessageBox.Show("init");
+		    decimal signal, time;
 		    try
 		    {
 			    try
 			    {
 				    reader = new StreamReader(filename);
-                    MessageBox.Show("reader");
 			    }
 			    catch (Exception e1)
 			    {
@@ -54,16 +52,19 @@ namespace BSS___EKG
 			    do
 			    {
 				    signal = (decimal.Parse(line.Split('\t')[channel]));
-				    signal = signal / 1000;                                 // signal je cjelobrojni na 11 bita - dijeli se sa 1000 - mV
+                    time = (decimal.Parse(line.Split('\t')[0]));
+				    signal = signal / 1000;
+                    MessageBox.Show(signal.ToString());// signal je cjelobrojni na 11 bita - dijeli se sa 1000 - mV
                     InputBuffer.Write(signal);                              // simulacija cekanja na prekid od ulaznog uredjaja -  
                 } while ((line = reader.ReadLine()) != null);               // kad istekne vrijeme ucita sesljedeca vrijednost EKG signala    
+                stop();
             }
 		    catch(Exception e)
 		    {
                 
                 // Catch blok glavnog try scopa
 		    }
-		    stop();
+		    
             
         }
 

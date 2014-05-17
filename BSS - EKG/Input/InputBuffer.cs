@@ -17,6 +17,7 @@ namespace BSS___EKG
         public static List<decimal> data = new List<decimal>();
         static Input input;
         public static void Open(String filename, short channel, FileType filetype){
+
         }
         public static bool ReadOne(){
             return true;
