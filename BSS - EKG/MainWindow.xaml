@@ -34,7 +34,7 @@
             <StackPanel Grid.Row="1" Margin="20,0,5,5" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="2">
                     <TextBlock Grid.Row="0" Text="Preview duration (ms):" Margin="0,0,5,0" />
-                    <TextBox x:Name="PreviewDurationTextBlock" Text="500" Width="44" />
+                    <TextBox x:Name="PreviewDurationTextBlock" Text="2000" Width="44" />
                 </StackPanel>
             </StackPanel>
 
