@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows;
+using OxyPlot.Axes;
 
 namespace BSS___EKG
 {
@@ -18,7 +19,11 @@ namespace BSS___EKG
         private InputBuffer inputBuffer = new InputBuffer();
         private SignalProcessor signalProcessor = new SignalProcessor();
         private DispatcherTimer dispatcherTimer;
+        
+        
         private OxyPlot.Series.LineSeries lineSeries = new OxyPlot.Series.LineSeries(); // Lines for the plot
+        LinearAxis linearAxisY = new LinearAxis();
+        LinearAxis linearAxisX = new LinearAxis();
 
         private decimal lastTime = 0;
 
@@ -122,7 +127,26 @@ namespace BSS___EKG
 
             // Init plot
             PlotModel model = new PlotModel { Title = "EKG Signal" };
-                model.Series.Add(lineSeries);
+            model.Series.Add(lineSeries);
+
+            linearAxisY.MajorStep = 0.5;
+            linearAxisY.MinorStep = 0.1;
+            linearAxisY.MajorGridlineStyle = LineStyle.Solid;
+            linearAxisY.MinorGridlineStyle = LineStyle.Dot;
+            double s = linearAxisY.Scale;
+
+            model.Axes.Add(linearAxisY);
+
+            
+            linearAxisX.MajorStep = 0.2;
+            linearAxisX.MinorStep = 0.04;
+            linearAxisX.MajorGridlineStyle = LineStyle.Solid;
+            linearAxisX.MinorGridlineStyle = LineStyle.Dot;  
+            linearAxisX.Position = AxisPosition.Bottom;
+
+            model.Axes.Add(linearAxisX);
+            
+
             MainWindow.Instance.EKG_Plot.Model = model;
 
             
@@ -131,6 +155,21 @@ namespace BSS___EKG
                 lineSeries.Points.Add(new DataPoint(i * 1.0 / 10000, 0));
 
             //lineSeries.Smooth = true;
+        }
+
+
+        public void PlotRecalculateScale()
+        {
+            if (lineSeries.Points.Count > 3)
+            {
+                double height = MainWindow.Instance.EKG_Plot.ActualHeight;
+                double width = MainWindow.Instance.EKG_Plot.ActualWidth;
+                double duration = lineSeries.Points.Last().X - lineSeries.Points.First().X;
+                double hm = (width * 0.2) / duration;
+                double max = height / (hm * 2.0);
+                linearAxisY.Minimum = 0.3 - max / 2.0;
+                linearAxisY.Maximum = 0.3 + max / 2.0;
+            }            
         }
 
 
@@ -172,6 +211,7 @@ namespace BSS___EKG
 
             lastTime = time;
             MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
+            PlotRecalculateScale(); // Recalculate scale
         }
     }
 }

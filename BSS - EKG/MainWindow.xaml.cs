@@ -77,6 +77,7 @@ namespace BSS___EKG
         private void PreferencesApply_Click(object sender, RoutedEventArgs e)
         {
             applyPreferences();
-        }      
+        }
+
     }
 }
