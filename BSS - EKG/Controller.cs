@@ -100,6 +100,8 @@ namespace BSS___EKG
                 FileType type = FileType.BINARY;
                 if (fileExtension == ".txt" || fileExtension == ".TXT")
                     type = FileType.TEXT;
+                else if (fileExtension == ".mat" || fileExtension == ".MAT")
+                    type = FileType.MATLAB;
 
 
                 // Open the buffer
