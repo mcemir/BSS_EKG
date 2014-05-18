@@ -203,8 +203,9 @@ namespace BSS___EKG
             signalProcessor.QRS_Detect(value, time);
 
             lastTime = time;
-            MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
+            
             PlotRecalculateScale(); // Recalculate scale
+            MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
         }
     }
 }
