@@ -147,14 +147,7 @@ namespace BSS___EKG
             model.Axes.Add(linearAxisX);
             
 
-            MainWindow.Instance.EKG_Plot.Model = model;
-
-            
-            // Add default data to plot
-            for (int i = -Duration; i < 0; i++)
-                lineSeries.Points.Add(new DataPoint(i * 1.0 / 10000, 0));
-
-            //lineSeries.Smooth = true;
+            MainWindow.Instance.EKG_Plot.Model = model;            
         }
 
 
