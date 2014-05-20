@@ -110,7 +110,7 @@ namespace BSS___EKG
 
 
                 // Open the buffer
-                inputBuffer.Open(filePath, 1, type);
+                inputBuffer.Open(filePath, 2, type);
             }
             else
                 return;
