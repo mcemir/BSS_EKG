@@ -62,7 +62,7 @@ namespace BSS___EKG
             // Open the file dialog to show the file
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = ".txt";                            // Default file extension
-            dlg.Filter = "MIT Arrhythmia File (*.txt, *.dat, *.mat)|*.txt; *.dat; *.mat";        // Filter files by extension
+            dlg.Filter = "MIT Arrhythmia File (*.txt, *.dat)|*.txt; *.dat";        // Filter files by extension
             dlg.Title = "Select PhysioBank MIT-BIH Arrhytmia Signal";
 
 
@@ -84,33 +84,17 @@ namespace BSS___EKG
                 ib1.Open(filePath, 1, FileType.BINARY);
                 for (int i = 0; i < 20; i++)
                     MessageBox.Show(ib1.ReadOne().ToString());*/
-            
-                /*
-                // Read the header file
-                using (TextReader reader = File.OpenText(headerFile))
-                {
-                    int signalsCount;       // The number of signals present in the file        
-                    int samples;            // The number of samples  
-                    string[] bits = reader.ReadLine().Split(' ');
-                    signalsCount = Int32.Parse(bits[1]);
-                    F = Int32.Parse(bits[2]);
-                    samples = Int32.Parse(bits[3]);
-
-                    // Update main windows
-                    MainWindow.Instance.FrequencyTextBlock.Text = F.ToString();
-                }*/
-                
+                            
 
                 // Determine file type
                 FileType type = FileType.BINARY;
                 if (fileExtension == ".txt" || fileExtension == ".TXT")
                     type = FileType.TEXT;
-                else if (fileExtension == ".mat" || fileExtension == ".MAT")
-                    type = FileType.MATLAB;
+
 
 
                 // Open the buffer
-                inputBuffer.Open(filePath, 2, type);
+                inputBuffer.Open(filePath, 1, type);
             }
             else
                 return;

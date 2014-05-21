@@ -10,20 +10,63 @@ namespace BSS___EKG
 {
     public enum FileType{
         TEXT,
-        BINARY,
-        MATLAB
+        BINARY
     }
     class InputBuffer
     {
-        public int MAX_BUFFER_SIZE = 100;
         public List<decimal> dataSignal = new List<decimal>();
         public List<decimal> dataTime = new List<decimal>();
         private int currentPoint = 0;
         private Input input;
+        private recordDescription recDescription;
+        protected struct recordDescription
+        {
+            public String signalID;
+            public short numberOfChannels;
+            public Int64 numberOfSamples;
+            public decimal samplingFrequency;
+            public List<List<int>> channels;
+        };
 
         public InputBuffer(){
 
+
         }
+
+        private bool prepareBinaryInfo(String headerFile)
+        {
+            try
+            {
+                using (TextReader header = File.OpenText(headerFile))
+                {
+                    string tempLine = header.ReadLine();
+                    string[] tempInfo = tempLine.Split(' ');
+
+                    recDescription = new recordDescription();
+                    recDescription.channels = new List<List<int>>();
+                    recDescription.signalID = tempInfo[0];
+                    recDescription.numberOfChannels = Convert.ToInt16(tempInfo[1]);
+                    recDescription.samplingFrequency = Convert.ToDecimal(tempInfo[2]);
+                    recDescription.numberOfSamples = Convert.ToInt64(tempInfo[3]);
+                    while (!tempLine.Contains("#"))
+                    {
+                        tempLine = header.ReadLine();
+                        if (tempLine.Contains("#"))
+                        {
+                            break;
+                        }
+                        tempInfo = tempLine.Split(' ');
+                        recDescription.channels.Add(new List<int>());
+                        for (int i = 1; i < tempInfo.Length - 1; i++)
+                            recDescription.channels[recDescription.channels.Count - 1].Add(Convert.ToInt32(tempInfo[i])); ;
+                    }
+                }
+            }catch(Exception e1){
+                return false;
+            }
+            return true;
+        }
+
         public void Open(String filename, short channel, FileType filetype){
             try
             {
@@ -41,8 +84,15 @@ namespace BSS___EKG
                 {
                     try
                     {
-                        BinaryInput binInput = new BinaryInput(filename, 1000);
-                        binInput.read(this, channel);
+                        String headerFile = filename.Remove(filename.Length - 3) + "hea";
+                        prepareBinaryInfo(headerFile);
+                        if(channel<1 || channel>recDescription.channels.Count){
+                            MessageBox.Show("Greska pri citanju binarne datoteke.");
+                        }
+                        else{
+                            BinaryInput binInput = new BinaryInput(filename, 1000);
+                            binInput.read(this, channel); 
+                        }
                     }
                     catch { }
                     
