@@ -97,7 +97,7 @@ namespace BSS___EKG
                 InputDataProperties iba = new InputDataProperties();
                 
                 iba.Show();
-                //inputBuffer.Open(filePath, 1, type);
+                inputBuffer.Open(filePath, 1, type);
             }
             else
                 return;
