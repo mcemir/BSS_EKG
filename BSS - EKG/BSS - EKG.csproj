@@ -63,12 +63,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controller.cs" />
+    <Compile Include="InputDataProperties.xaml.cs">
+      <DependentUpon>InputDataProperties.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Input\BinaryInput.cs" />
     <Compile Include="Input\Input.cs" />
     <Compile Include="Input\InputBuffer.cs" />
     <Compile Include="Input\MatlabBinaryInput.cs" />
     <Compile Include="Input\TextInput.cs" />
     <Compile Include="SignalProcessor.cs" />
+    <Page Include="InputDataProperties.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

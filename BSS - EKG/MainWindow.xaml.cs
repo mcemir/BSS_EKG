@@ -79,5 +79,10 @@ namespace BSS___EKG
             applyPreferences();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            controller.Preview();
+        }
+
     }
 }

@@ -94,7 +94,10 @@ namespace BSS___EKG
 
 
                 // Open the buffer
-                inputBuffer.Open(filePath, 1, type);
+                InputDataProperties iba = new InputDataProperties();
+                
+                iba.Show();
+                //inputBuffer.Open(filePath, 1, type);
             }
             else
                 return;
@@ -117,6 +120,8 @@ namespace BSS___EKG
             linearAxisY.MinorStep = 0.1;
             linearAxisY.MajorGridlineStyle = LineStyle.Solid;
             linearAxisY.MinorGridlineStyle = LineStyle.Dot;
+            linearAxisY.Title = "Voltage";
+            linearAxisY.Unit = "mV";
             double s = linearAxisY.Scale;
 
             model.Axes.Add(linearAxisY);
@@ -127,6 +132,8 @@ namespace BSS___EKG
             linearAxisX.MajorGridlineStyle = LineStyle.Solid;
             linearAxisX.MinorGridlineStyle = LineStyle.Dot;  
             linearAxisX.Position = AxisPosition.Bottom;
+            linearAxisX.Title = "Time";
+            linearAxisX.Unit = "s";
 
             model.Axes.Add(linearAxisX);
             
@@ -158,6 +165,7 @@ namespace BSS___EKG
         {
             if (dispatcherTimer != null)
             {
+                
                 dispatcherTimer.Start();
             }
         }
@@ -171,6 +179,15 @@ namespace BSS___EKG
             }
         }
 
+        public void Preview()
+        {
+            if (dispatcherTimer != null)
+            {
+                linearAxisX.IsPanEnabled = true;
+                linearAxisX.IsZoomEnabled = true;
+                dispatcherTimer.Stop();
+            }
+        }
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             if (lineSeries.Points.Count>3)
@@ -188,7 +205,7 @@ namespace BSS___EKG
 
             lastTime = time;
             
-            PlotRecalculateScale(); // Recalculate scale
+            // PlotRecalculateScale(); // Recalculate scale, scale is constante unless in preview mode
             MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
         }
     }

@@ -17,6 +17,7 @@
                 <Button x:Name="playButton" Content="Play" Width="75" Height="25" Click="playSignalButton_Click" />
                 <Button x:Name="stopButton" Content="Stop" Width="75" Height="25" Click="stopSignalButton_Click" />
             </StackPanel>
+            <Button Content="Preview" HorizontalAlignment="Right" Margin="675,13,20,0" Width="75" Click="Button_Click" VerticalAlignment="Top"/>
         </Grid>
 
         <Grid x:Name="PreferencesPanel" DockPanel.Dock="Left" Width="200" Background="LightGray" Visibility="Collapsed">
@@ -66,7 +67,8 @@
                 <TextBlock Text="HR = "  FontSize="25" FontWeight="Bold" Foreground="Red"  />
                 <TextBlock Text="" x:Name="hrTextBlock" FontSize="25" FontWeight="Bold" Foreground="Red"  />
             </StackPanel>
-            
+            <Label Content="[s]" HorizontalAlignment="Right" Margin="710,402,20,20" VerticalAlignment="Top"/>
+
         </Grid>
         
 

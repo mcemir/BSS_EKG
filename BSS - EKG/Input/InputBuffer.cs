@@ -106,12 +106,23 @@ namespace BSS___EKG
             catch(Exception){}
         }
 
+        private bool checkBoundaries()
+        {
+            if (recDescription.numberOfSamples == 0) return false;
+            else if (currentPoint == recDescription.numberOfSamples && currentPoint > 0)
+            {
+                currentPoint--;
+            }
+            return true;
+        }
+
         public decimal ReadOne(){
-            return dataSignal[currentPoint++];
+                return dataSignal[currentPoint++];
         }
         public decimal ReadOneTime()
         {
-            return dataTime[currentPoint++];
+                return dataTime[currentPoint++];
+  
         }
 
         public decimal ReadOneCurrent()
