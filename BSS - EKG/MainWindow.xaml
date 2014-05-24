@@ -63,7 +63,7 @@
 
         <Grid>
             <oxy:Plot x:Name="EKG_Plot" />
-            <StackPanel Orientation="Horizontal" Margin="50" x:Name="hrStackPanel">
+            <StackPanel Orientation="Horizontal" Margin="100, 50" x:Name="hrStackPanel">
                 <TextBlock Text="HR = "  FontSize="25" FontWeight="Bold" Foreground="Red"  />
                 <TextBlock Text="" x:Name="hrTextBlock" FontSize="25" FontWeight="Bold" Foreground="Red"  />
             </StackPanel>

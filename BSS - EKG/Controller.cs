@@ -21,9 +21,9 @@ namespace BSS___EKG
         private DispatcherTimer dispatcherTimer;
         
         
-        private OxyPlot.Series.LineSeries lineSeries = new OxyPlot.Series.LineSeries(); // Lines for the plot
-        LinearAxis linearAxisY = new LinearAxis();
-        LinearAxis linearAxisX = new LinearAxis();
+        private OxyPlot.Series.LineSeries lineSeries; // Lines for the plot
+        LinearAxis linearAxisY;
+        LinearAxis linearAxisX;
 
         private decimal lastTime = 0;
 
@@ -94,10 +94,10 @@ namespace BSS___EKG
 
 
                 // Open the buffer
-                InputDataProperties iba = new InputDataProperties();                
-                iba.Show();
+                //InputDataProperties iba = new InputDataProperties();                
+                //iba.Show();
 
-                inputBuffer.Open(filePath, 1, type);
+                inputBuffer.Open(filePath, 2, type);
             }
             else
                 return;
@@ -114,20 +114,22 @@ namespace BSS___EKG
 
             // Init plot
             PlotModel model = new PlotModel { Title = "EKG Signal" };
+            lineSeries = new OxyPlot.Series.LineSeries();
             model.Series.Add(lineSeries);
 
+            linearAxisY = new LinearAxis();
             linearAxisY.MajorStep = 0.5;
             linearAxisY.MinorStep = 0.1;
             linearAxisY.MajorGridlineStyle = LineStyle.Solid;
             linearAxisY.MinorGridlineStyle = LineStyle.Dot;
             linearAxisY.Title = "Voltage";
             linearAxisY.Unit = "mV";
-            linearAxisX.IsPanEnabled = false;
-            linearAxisX.IsZoomEnabled = false;
+            linearAxisY.IsPanEnabled = false;
+            linearAxisY.IsZoomEnabled = false;
 
             model.Axes.Add(linearAxisY);
 
-            
+            linearAxisX = new LinearAxis();
             linearAxisX.MajorStep = 0.2;
             linearAxisX.MinorStep = 0.04;
             linearAxisX.MajorGridlineStyle = LineStyle.Solid;
@@ -154,8 +156,8 @@ namespace BSS___EKG
                 double duration = lineSeries.Points.Last().X - lineSeries.Points.First().X;
                 double hm = (width * 0.2) / duration;
                 double max = height / (hm * 2.0);
-                linearAxisY.Minimum = 0.3 - max / 2.0;
-                linearAxisY.Maximum = 0.3 + max / 2.0;
+                linearAxisY.Minimum = signalProcessor.QRS_Threshold - 0.25 - max / 2.0;
+                linearAxisY.Maximum = signalProcessor.QRS_Threshold - 0.25 + max / 2.0;
             }            
         }
 

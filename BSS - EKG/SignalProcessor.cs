@@ -11,9 +11,10 @@ namespace BSS___EKG
     {
         private List<double> R_peaks = new List<double>();
         private SoundPlayer localPlayer = new SoundPlayer();
-        private double QRS_Threshold;
+        
         private List<decimal> data = new List<decimal>();
 
+        public double QRS_Threshold { get; set; }
         public int HR_digits { get; set; }  // Number of decimal places of HR BPM
         public int Cycles { get; set; }   // Number of cycles used for HR calculation        
         public double HR { get; private set; }
@@ -39,6 +40,7 @@ namespace BSS___EKG
         {
             dataCount++;
             dataSum += (double)v;
+            QRS_Threshold = dataSum / (dataCount * 1.0) + 0.5;
         }
 
 
@@ -47,7 +49,7 @@ namespace BSS___EKG
             data.Add(v);
 
 
-            if (data.Count > 3  &&
+            if (dataCount > 300 &&
                 data[data.Count - 2] > (decimal)QRS_Threshold &&
                 data[data.Count - 2] > data[data.Count - 1] &&
                 data[data.Count - 2] > data[data.Count - 3])
