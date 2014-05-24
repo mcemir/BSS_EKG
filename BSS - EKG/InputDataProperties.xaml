@@ -10,13 +10,13 @@
             <Label HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
             <Label Content="Channel to read:" HorizontalAlignment="Right" Margin="0,120,145,0" VerticalAlignment="Top"/>
             <Label Content="Number of channels:" HorizontalAlignment="Right" Margin="0,92,144,0" VerticalAlignment="Top"/>
-            <ComboBox HorizontalAlignment="Left" Margin="134,124,0,0" VerticalAlignment="Top" Width="120"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="134,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="134,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="134,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-            <TextBox HorizontalAlignment="Left" Height="23" Margin="134,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
-            <Button Content="Read" HorizontalAlignment="Left" Margin="99,169,0,0" VerticalAlignment="Top" Width="75"/>
-            <Button Content="Cancel" HorizontalAlignment="Left" Margin="179,169,0,0" VerticalAlignment="Top" Width="75"/>
+            <ComboBox x:Name="comboBoxChannel" HorizontalAlignment="Left" Margin="134,124,0,0" VerticalAlignment="Top" Width="120" IsReadOnly="True"/>
+            <TextBox x:Name="textBoxRecordID" HorizontalAlignment="Left" Height="23" Margin="134,12,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False" TextAlignment="Right"/>
+            <TextBox x:Name="textBoxSamplingFrequency" HorizontalAlignment="Left" Height="23" Margin="134,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False" TextAlignment="Right"/>
+            <TextBox x:Name="textBoxNumberSamples" HorizontalAlignment="Left" Height="23" Margin="134,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False" TextAlignment="Right"/>
+            <TextBox x:Name="textBoxNumberChannels" HorizontalAlignment="Left" Height="23" Margin="134,96,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsEnabled="False" TextAlignment="Right"/>
+            <Button Content="Read" HorizontalAlignment="Left" Margin="99,169,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+            <Button Content="Cancel" HorizontalAlignment="Left" Margin="179,169,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
         </Grid>
 
     </Grid>

@@ -19,9 +19,35 @@ namespace BSS___EKG
     /// </summary>
     public partial class InputDataProperties : Window
     {
-        public InputDataProperties()
+        public bool fc { get; private set; }
+        public int channelToRead { get; private set; }
+        public InputDataProperties(RecordDescription rd)
         {
             InitializeComponent();
+            textBoxRecordID.Text = rd.signalID;
+            textBoxSamplingFrequency.Text = Convert.ToString(rd.samplingFrequency);
+            textBoxNumberSamples.Text = Convert.ToString(rd.numberOfSamples);
+            textBoxNumberChannels.Text = Convert.ToString(rd.numberOfChannels);
+            for (int i = 1; i <= rd.channels.Count; i++)
+            {
+                comboBoxChannel.Items.Add(i.ToString());
+            }
+            comboBoxChannel.SelectedIndex = 0;
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.channelToRead = comboBoxChannel.SelectedIndex + 1;
+            this.fc = true;
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            this.channelToRead = -1;
+            this.fc = false;
+            this.Close();
         }
     }
 }

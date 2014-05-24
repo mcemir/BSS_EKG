@@ -94,10 +94,21 @@ namespace BSS___EKG
 
 
                 // Open the buffer
-                //InputDataProperties iba = new InputDataProperties();                
-                //iba.Show();
+                inputBuffer.prepareBinaryInfo(filePath);
+                InputDataProperties iba = new InputDataProperties(inputBuffer.recDescription);                
+                iba.ShowDialog();
+                if (iba.fc)
+                {
+                    short channelForm = Convert.ToInt16(iba.channelToRead);
+                    inputBuffer.Open(filePath, channelForm, type);
+                }
+                else
+                {
+                    MessageBox.Show("JeboSiJeza");
+                    return;
+                }
+                
 
-                inputBuffer.Open(filePath, 2, type);
             }
             else
                 return;

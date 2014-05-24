@@ -4,20 +4,22 @@
         xmlns:oxy="http://oxyplot.codeplex.com"
         xmlns:local="clr-namespace:BSS___EKG"
         Title="MainWindow" Loaded="Window_Loaded">
-    
+
 
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Load Signal" Click="LoadSignal_Click"/>
             <MenuItem Header="_Preferences" Click="Preferences_Click" />
-        </Menu>        
+        </Menu>
 
         <Grid DockPanel.Dock="Bottom" Height="50" Background="LightGray">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="playButton" Content="Play" Width="75" Height="25" Click="playSignalButton_Click" />
                 <Button x:Name="stopButton" Content="Stop" Width="75" Height="25" Click="stopSignalButton_Click" />
             </StackPanel>
+
             <Button Content="Preview" HorizontalAlignment="Right" Margin="675,13,20,0" Width="75" Click="PreviewButton_Click" VerticalAlignment="Top"/>
+
         </Grid>
 
         <Grid x:Name="PreferencesPanel" DockPanel.Dock="Left" Width="200" Background="LightGray" Visibility="Collapsed">
@@ -30,7 +32,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
+
             <TextBlock Grid.Row="0" Text="Acquisition" Margin="5" />
             <StackPanel Grid.Row="1" Margin="20,0,5,5" Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" Margin="2">
@@ -55,9 +57,9 @@
 
             <TextBlock Grid.Row="4" Text="General" Margin="5" />
             <StackPanel Grid.Row="5" Margin="20,0,5,5" Orientation="Vertical">
-                <CheckBox x:Name="Sound_CheckBox" Content="Enable Sound" Margin="2" IsChecked="True" />                
+                <CheckBox x:Name="Sound_CheckBox" Content="Enable Sound" Margin="2" IsChecked="True" />
             </StackPanel>
-            
+
             <Button Grid.Row="6" Content="Apply" Click="PreferencesApply_Click" Margin="5" />
         </Grid>
 
@@ -70,7 +72,7 @@
             <Label Content="[s]" HorizontalAlignment="Right" Margin="710,402,20,20" VerticalAlignment="Top"/>
 
         </Grid>
-        
+
 
     </DockPanel>
 </Window>

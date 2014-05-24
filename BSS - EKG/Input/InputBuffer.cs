@@ -12,29 +12,32 @@ namespace BSS___EKG
         TEXT,
         BINARY
     }
+
+    public struct RecordDescription
+    {
+        public String signalID;
+        public short numberOfChannels;
+        public Int64 numberOfSamples;
+        public decimal samplingFrequency;
+        public List<List<int>> channels;
+    }
     class InputBuffer
     {
         public List<decimal> dataSignal = new List<decimal>();
         public List<decimal> dataTime = new List<decimal>();
         private int currentPoint = 0;
         private Input input;
-        private recordDescription recDescription;
-        protected struct recordDescription
-        {
-            public String signalID;
-            public short numberOfChannels;
-            public Int64 numberOfSamples;
-            public decimal samplingFrequency;
-            public List<List<int>> channels;
-        };
+        public RecordDescription recDescription;
+  
 
         public InputBuffer(){
 
 
         }
 
-        private bool prepareBinaryInfo(String headerFile)
+        public bool prepareBinaryInfo(String filename)
         {
+            String headerFile = filename.Remove(filename.Length - 3) + "hea";
             try
             {
                 using (TextReader header = File.OpenText(headerFile))
@@ -42,7 +45,7 @@ namespace BSS___EKG
                     string tempLine = header.ReadLine();
                     string[] tempInfo = tempLine.Split(' ');
 
-                    recDescription = new recordDescription();
+                    recDescription = new RecordDescription();
                     recDescription.channels = new List<List<int>>();
                     recDescription.signalID = tempInfo[0];
                     recDescription.numberOfChannels = Convert.ToInt16(tempInfo[1]);
@@ -84,8 +87,7 @@ namespace BSS___EKG
                 {
                     try
                     {
-                        String headerFile = filename.Remove(filename.Length - 3) + "hea";
-                        prepareBinaryInfo(headerFile);
+                        prepareBinaryInfo(filename);
                         if(channel<1 || channel>recDescription.channels.Count){
                             MessageBox.Show("Greska pri citanju binarne datoteke.");
                         }
