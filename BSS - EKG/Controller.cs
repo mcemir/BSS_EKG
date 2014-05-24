@@ -167,8 +167,8 @@ namespace BSS___EKG
                 double duration = lineSeries.Points.Last().X - lineSeries.Points.First().X;
                 double hm = (width * 0.2) / duration;
                 double max = height / (hm * 2.0);
-                linearAxisY.Minimum = signalProcessor.QRS_Threshold - 0.25 - max / 2.0;
-                linearAxisY.Maximum = signalProcessor.QRS_Threshold - 0.25 + max / 2.0;
+                linearAxisY.Minimum = signalProcessor.QRS_Threshold - max / 2.0;
+                linearAxisY.Maximum = signalProcessor.QRS_Threshold + max / 2.0;
             }            
         }
 
@@ -222,17 +222,24 @@ namespace BSS___EKG
                 while (lineSeries.Points.Last().X - lineSeries.Points.First().X > Duration/1000.0)
                     lineSeries.Points.RemoveAt(0);
 
-            decimal value = inputBuffer.ReadOne();
-            decimal time = inputBuffer.ReadOneTimeCurrent();
+            List<List<decimal>> inputs = inputBuffer.ReadMany(10);
+            //decimal value = inputBuffer.ReadOne();
+            //decimal time = inputBuffer.ReadOneTimeCurrent();
 
-            lineSeries.Points.Add(new DataPoint((double)time, (double)value));
-            
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)TimeSpan.FromSeconds((double)(time - lastTime)).TotalMilliseconds);
+            for (int i = 0; i < inputs[0].Count; i++ )
+            {
+                lineSeries.Points.Add(new DataPoint((double)inputs[1][i], (double)inputs[0][i]));
+            }
 
-            signalProcessor.QRS_Detect(value, time);
-            signalProcessor.CalculateAvgValue(value);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)TimeSpan.FromSeconds((double)(inputs[1].Last() - lastTime)).TotalMilliseconds);
 
-            lastTime = time;
+            for (int i = 0; i < inputs[0].Count; i++)
+            {
+                signalProcessor.QRS_Detect(inputs[0][i], inputs[1][i]);
+                signalProcessor.CalculateAvgValue(inputs[0][i]);
+
+            }
+            lastTime = inputs[1].Last();
             
             PlotRecalculateScale(); // Recalculate scale, scale is constante unless in preview mode
             MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
