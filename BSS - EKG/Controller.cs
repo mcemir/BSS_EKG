@@ -170,7 +170,11 @@ namespace BSS___EKG
         {
             if (dispatcherTimer != null)
             {
-                
+                linearAxisX.IsPanEnabled = false;
+                linearAxisX.IsZoomEnabled = false;
+                linearAxisY.IsPanEnabled = false;
+                linearAxisY.IsZoomEnabled = false;
+                lineSeries.Points.Clear();
                 dispatcherTimer.Start();
             }
         }
@@ -190,7 +194,15 @@ namespace BSS___EKG
             {
                 linearAxisX.IsPanEnabled = true;
                 linearAxisX.IsZoomEnabled = true;
+                linearAxisY.IsPanEnabled = true;
+                linearAxisY.IsZoomEnabled = true;
                 dispatcherTimer.Stop();
+
+                lineSeries.Points.Clear(); // Delete all points
+                for (int i = 0; i < inputBuffer.dataSignal.Count; i++)
+                {
+                    lineSeries.Points.Add(new DataPoint((double)inputBuffer.dataTime[i], (double)inputBuffer.dataSignal[i]));
+                }                
             }
         }
         private void dispatcherTimer_Tick(object sender, EventArgs e)

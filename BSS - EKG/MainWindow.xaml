@@ -17,7 +17,7 @@
                 <Button x:Name="playButton" Content="Play" Width="75" Height="25" Click="playSignalButton_Click" />
                 <Button x:Name="stopButton" Content="Stop" Width="75" Height="25" Click="stopSignalButton_Click" />
             </StackPanel>
-            <Button Content="Preview" HorizontalAlignment="Right" Margin="675,13,20,0" Width="75" Click="Button_Click" VerticalAlignment="Top"/>
+            <Button Content="Preview" HorizontalAlignment="Right" Margin="675,13,20,0" Width="75" Click="PreviewButton_Click" VerticalAlignment="Top"/>
         </Grid>
 
         <Grid x:Name="PreferencesPanel" DockPanel.Dock="Left" Width="200" Background="LightGray" Visibility="Collapsed">
