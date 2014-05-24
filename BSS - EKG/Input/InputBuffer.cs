@@ -136,20 +136,19 @@ namespace BSS___EKG
             return dataTime[currentPoint];
         }
 
-        public List<decimal> ReadMany(int size){
-            List<decimal> temp = new List<decimal>();
+        public List< List<decimal>> ReadMany(int size){
+            List<List<decimal>> temp = new List<List<decimal>>();
+            temp.Add(new List<decimal>());
+            temp.Add(new List<decimal>());
             for (int i = 0; i < size; i++)
-                temp.Add(ReadOne());
+            {
+                temp[1].Add(ReadOneTime());
+                temp[0].Add(ReadOneCurrent());
+            }
             return temp;
         }
 
-        public List<decimal> ReadManyTime(int size)
-        {
-            List<decimal> temp = new List<decimal>();
-            for (int i = 0; i < size; i++)
-                temp.Add(ReadOneTime());
-            return temp;
-        }
+
         public bool Write(decimal timeValue, decimal signalValue){
             dataSignal.Add(signalValue);
             dataTime.Add(timeValue);
