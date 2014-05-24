@@ -94,9 +94,9 @@ namespace BSS___EKG
 
 
                 // Open the buffer
-                InputDataProperties iba = new InputDataProperties();
-                
+                InputDataProperties iba = new InputDataProperties();                
                 iba.Show();
+
                 inputBuffer.Open(filePath, 1, type);
             }
             else
@@ -122,7 +122,8 @@ namespace BSS___EKG
             linearAxisY.MinorGridlineStyle = LineStyle.Dot;
             linearAxisY.Title = "Voltage";
             linearAxisY.Unit = "mV";
-            double s = linearAxisY.Scale;
+            linearAxisX.IsPanEnabled = false;
+            linearAxisX.IsZoomEnabled = false;
 
             model.Axes.Add(linearAxisY);
 
@@ -134,6 +135,8 @@ namespace BSS___EKG
             linearAxisX.Position = AxisPosition.Bottom;
             linearAxisX.Title = "Time";
             linearAxisX.Unit = "s";
+            linearAxisX.IsPanEnabled = false;
+            linearAxisX.IsZoomEnabled = false;
 
             model.Axes.Add(linearAxisX);
             
@@ -202,10 +205,11 @@ namespace BSS___EKG
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, (int)TimeSpan.FromSeconds((double)(time - lastTime)).TotalMilliseconds);
 
             signalProcessor.QRS_Detect(value, time);
+            signalProcessor.CalculateAvgValue(value);
 
             lastTime = time;
             
-            // PlotRecalculateScale(); // Recalculate scale, scale is constante unless in preview mode
+            PlotRecalculateScale(); // Recalculate scale, scale is constante unless in preview mode
             MainWindow.Instance.EKG_Plot.InvalidatePlot();      // This updates the plot
         }
     }

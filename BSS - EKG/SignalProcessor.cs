@@ -18,6 +18,9 @@ namespace BSS___EKG
         public int Cycles { get; set; }   // Number of cycles used for HR calculation        
         public double HR { get; private set; }
 
+        // Avg calculation
+        int dataCount = 0;
+        double dataSum = 0;
 
         public SignalProcessor()
         {
@@ -31,6 +34,12 @@ namespace BSS___EKG
             localPlayer.Load();
         }
 
+
+        public void CalculateAvgValue(decimal v)
+        {
+            dataCount++;
+            dataSum += (double)v;
+        }
 
 
         public void QRS_Detect(decimal v, decimal t)
