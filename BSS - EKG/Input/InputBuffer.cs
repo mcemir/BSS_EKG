@@ -26,7 +26,7 @@ namespace BSS___EKG
         public List<decimal> dataSignal = new List<decimal>();
         public List<decimal> dataTime = new List<decimal>();
         private int currentPoint = 0;
-        private Input input;
+
         public RecordDescription recDescription;
   
 
@@ -89,7 +89,7 @@ namespace BSS___EKG
                     {
                         prepareBinaryInfo(filename);
                         if(channel<1 || channel>recDescription.channels.Count){
-                            MessageBox.Show("Greska pri citanju binarne datoteke.");
+                            MessageBox.Show("Read error of binary file!");
                         }
                         else{
                             BinaryInput binInput = new BinaryInput(filename, 1000);
@@ -101,29 +101,29 @@ namespace BSS___EKG
                 }
                 else
                 {
-                    MessageBox.Show("Sta si dirao!");
+                    MessageBox.Show("How did You get here?");
                 }
 
             }
             catch(Exception){}
         }
 
-        private bool checkBoundaries()
+        private void checkBoundaries()
         {
-            if (recDescription.numberOfSamples == 0) return false;
-            else if (currentPoint == recDescription.numberOfSamples && currentPoint > 0)
+            if (currentPoint == recDescription.numberOfSamples && currentPoint > 0)
             {
                 currentPoint--;
             }
-            return true;
         }
 
         public decimal ReadOne(){
-                return dataSignal[currentPoint++];
+            checkBoundaries();
+            return dataSignal[currentPoint++];
         }
         public decimal ReadOneTime()
         {
-                return dataTime[currentPoint++];
+            checkBoundaries();
+            return dataTime[currentPoint++];
   
         }
 
@@ -136,8 +136,19 @@ namespace BSS___EKG
             return dataTime[currentPoint];
         }
 
-        public List<decimal> ReadMany(){
-            return new List<decimal>();
+        public List<decimal> ReadMany(int size){
+            List<decimal> temp = new List<decimal>();
+            for (int i = 0; i < size; i++)
+                temp.Add(ReadOne());
+            return temp;
+        }
+
+        public List<decimal> ReadManyTime(int size)
+        {
+            List<decimal> temp = new List<decimal>();
+            for (int i = 0; i < size; i++)
+                temp.Add(ReadOneTime());
+            return temp;
         }
         public bool Write(decimal timeValue, decimal signalValue){
             dataSignal.Add(signalValue);
@@ -145,6 +156,9 @@ namespace BSS___EKG
             return true;
         }
         public void Clear(){
+            dataSignal.Clear();
+            dataTime.Clear();
+            currentPoint = 0;
         }
 }
             
