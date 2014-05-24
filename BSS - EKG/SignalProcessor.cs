@@ -40,7 +40,7 @@ namespace BSS___EKG
         {
             dataCount++;
             dataSum += (double)v;
-            QRS_Threshold = dataSum / (dataCount * 1.0) + 0.5;
+            QRS_Threshold = dataSum / (dataCount * 1.0) + 0.2;
         }
 
 

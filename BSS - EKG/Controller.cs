@@ -167,8 +167,8 @@ namespace BSS___EKG
                 double duration = lineSeries.Points.Last().X - lineSeries.Points.First().X;
                 double hm = (width * 0.2) / duration;
                 double max = height / (hm * 2.0);
-                linearAxisY.Minimum = signalProcessor.QRS_Threshold - max / 2.0;
-                linearAxisY.Maximum = signalProcessor.QRS_Threshold + max / 2.0;
+                linearAxisY.Minimum = signalProcessor.QRS_Threshold + 0.3 - max / 2.0;
+                linearAxisY.Maximum = signalProcessor.QRS_Threshold + 0.3 + max / 2.0;
             }            
         }
 
