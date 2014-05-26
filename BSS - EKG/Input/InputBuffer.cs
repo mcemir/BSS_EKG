@@ -65,6 +65,7 @@ namespace BSS___EKG
                     }
                 }
             }catch(Exception e1){
+                MessageBox.Show("Error reding record's header file!");
                 return false;
             }
             return true;

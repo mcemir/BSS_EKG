@@ -58,7 +58,7 @@ namespace BSS___EKG
 
         public void LoadSignal()
         {
-
+            inputBuffer.Clear();
             // Open the file dialog to show the file
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = ".txt";                            // Default file extension
@@ -94,17 +94,29 @@ namespace BSS___EKG
 
 
                 // Open the buffer
-                inputBuffer.prepareBinaryInfo(filePath);
-                InputDataProperties iba = new InputDataProperties(inputBuffer.recDescription);                
-                iba.ShowDialog();
-                if (iba.fc)
+
+                if (inputBuffer.prepareBinaryInfo(filePath))
                 {
-                    short channelForm = Convert.ToInt16(iba.channelToRead);
-                    inputBuffer.Open(filePath, channelForm, type);
+                    InputDataProperties iba = new InputDataProperties(inputBuffer.recDescription);
+                    iba.ShowDialog();
+                    if (iba.fc)
+                    {
+                        try
+                        {
+                            short channelForm = Convert.ToInt16(iba.channelToRead);
+                            inputBuffer.Open(filePath, channelForm, type);
+                        }
+                        catch (Exception e)
+                        {
+                            MessageBox.Show("Error opening record file");
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("JeboSiJeza");
+                else { 
                     return;
                 }
                 

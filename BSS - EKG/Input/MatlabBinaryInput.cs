@@ -5,6 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
+/*
+ * TO BE COMPLETED
+ * Currently we don't know binary format
+ * in which MATLAB stores it's data.
+ * That's left for the further development.
+ */
+
 namespace BSS___EKG
 {
     class MatlabBinaryInput : Input
