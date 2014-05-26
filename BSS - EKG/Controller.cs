@@ -16,7 +16,7 @@ namespace BSS___EKG
 {
     class Controller
     {             
-        private InputBuffer inputBuffer = new InputBuffer();
+        private InputBuffer inputBuffer;
         private SignalProcessor signalProcessor = new SignalProcessor();
         private DispatcherTimer dispatcherTimer;
         
@@ -58,7 +58,8 @@ namespace BSS___EKG
 
         public void LoadSignal()
         {
-            inputBuffer.Clear();
+            lastTime = 0;
+            inputBuffer = new InputBuffer();
             // Open the file dialog to show the file
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.DefaultExt = ".txt";                            // Default file extension
@@ -179,8 +180,8 @@ namespace BSS___EKG
                 double duration = lineSeries.Points.Last().X - lineSeries.Points.First().X;
                 double hm = (width * 0.2) / duration;
                 double max = height / (hm * 2.0);
-                linearAxisY.Minimum = signalProcessor.QRS_Threshold + 0.3 - max / 2.0;
-                linearAxisY.Maximum = signalProcessor.QRS_Threshold + 0.3 + max / 2.0;
+                linearAxisY.Minimum = signalProcessor.QRS_Threshold - max / 2.0;
+                linearAxisY.Maximum = signalProcessor.QRS_Threshold + max / 2.0;
             }            
         }
 

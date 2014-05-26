@@ -69,8 +69,6 @@
                 <TextBlock Text="HR = "  FontSize="25" FontWeight="Bold" Foreground="Red"  />
                 <TextBlock Text="" x:Name="hrTextBlock" FontSize="25" FontWeight="Bold" Foreground="Red"  />
             </StackPanel>
-            <Label Content="[s]" HorizontalAlignment="Right" Margin="710,402,20,20" VerticalAlignment="Top"/>
-
         </Grid>
 
 
